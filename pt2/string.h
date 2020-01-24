@@ -1,3 +1,5 @@
+//lang::CwC
+
 #pragma once
 #include "object.h"
 #include <iostream>

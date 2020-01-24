@@ -1,14 +1,19 @@
+//lang::Cpp
+
 #pragma once
+
 #include "object.h" // our implementation of Object for A1
 #include "queue.h"  // our implementation of Queue for A1
 #include "string.h" // our implementation of String from Warmup
+#include <iostream>
 
 void FAIL()
 {
     exit(1);
 }
 void OK(const char *m)
-{ /** print m */
+{
+	std::cout << m << "\n";
 }
 void t_true(bool p)
 {

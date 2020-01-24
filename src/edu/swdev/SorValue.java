@@ -7,6 +7,10 @@ public class SorValue {
     private Boolean boolValue;
     private Float floatValue;
 
+    public SorValue() {
+        this.type = SorType.MISSING;
+    }
+
     public SorValue(Integer intValue) {
         this.type = SorType.INT;
         this.intValue = intValue;
@@ -43,7 +47,21 @@ public class SorValue {
         return boolValue;
     }
 
-    public Float getFloatValue() {
-        return floatValue;
+    public Float getFloatValue() { return floatValue; }
+
+    public Object getValue() {
+        if (SorType.BOOL.equals(this.type)) {
+            return this.boolValue;
+        }
+        if (SorType.FLOAT.equals(this.type)) {
+            return this.floatValue;
+        }
+        if (SorType.STRING.equals(this.type)) {
+            return this.stringValue;
+        }
+        if (SorType.INT.equals(this.type)) {
+            return this.intValue;
+        }
+        return null;
     }
 }

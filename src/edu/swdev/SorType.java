@@ -4,5 +4,6 @@ public enum SorType {
     FLOAT,
     INT,
     BOOL,
-    STRING;
+    STRING,
+    MISSING;
 }

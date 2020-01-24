@@ -27,6 +27,4 @@ public:
     virtual long unsigned int hash_me()
     {
     }
-
-    //toString, getClass
 };

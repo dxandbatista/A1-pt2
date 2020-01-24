@@ -1,9 +1,7 @@
-#include <string.h>
-
 class Object
 {
 public:
-    size_t hashVal;
+    long unsigned int hashVal;
 
     // Constructor
     Object()
@@ -21,12 +19,12 @@ public:
     }
 
     // Generates a hash value for this Object if it doesn't already have one
-    virtual size_t hash()
+    virtual long unsigned int hash()
     {
     }
 
     // Generates a hash value for this Object
-    virtual size_t hash_me()
+    virtual long unsigned int hash_me()
     {
     }
 

@@ -15,6 +15,9 @@ public class MemoryDataStore implements SorData {
     // get parsed type of specific column
     @Override
     public SorType getColType(int column) {
+        if (column >= this.schema.size()) {
+            throw new IndexOutOfBoundsException("Column " + column + " is out of bounds.");
+        }
         return this.schema.get(column);
     }
 

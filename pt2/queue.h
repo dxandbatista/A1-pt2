@@ -26,6 +26,26 @@ public:
     {
     }
 
+    // Returns the head Object of the Queue without removing it
+    Object *peek()
+    {
+    }
+
+    // Checks to see if the Queue contains a specific Object already
+    bool contains(Object *o)
+    {
+    }
+
+    // Combines a given Queue into this Queue
+    void enqueue_all(Queue *q)
+    {
+    }
+
+    // Removes all items from this Queue
+    void dequeue_all()
+    {
+    }
+
     // Returns size of queue
     bool queue_size()
     {

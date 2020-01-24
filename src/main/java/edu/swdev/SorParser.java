@@ -6,7 +6,6 @@ import java.util.List;
 
 public class SorParser {
     private RandomAccessFile file;
-    private String fileName;
     private StringBuilder stringBuilder;
     private List<List<SorValue>> data;
     private List<SorType> schema;
@@ -17,7 +16,6 @@ public class SorParser {
     public SorParser(String fileName, int startPos, int numBytes) {
         this.startPos = startPos;
         this.numBytes = numBytes;
-        this.fileName = fileName;
         this.stringBuilder = new StringBuilder("");
         this.data = new ArrayList<>();
         this.schema = new ArrayList<>();
@@ -28,7 +26,18 @@ public class SorParser {
         }
     }
 
-    // retrieve parsed schema
+    /**
+     * Parses the file by determining schema first, then parsing based on the schema
+     */
+    public void parseFile() {
+        int schemaLineIndex = this.findSchemaLine();
+        this.inferSchema(schemaLineIndex);
+        this.readData();
+    }
+
+    /**
+     * Returns the schema for the parsed file
+     */
     public List<SorType> getSchema() {
         if (this.schema.size() == 0) {
             throw new SorParseException("No file has been parsed yet.");
@@ -36,7 +45,9 @@ public class SorParser {
         return this.schema;
     }
 
-    // retrieve parsed data
+    /**
+     * Returns the data for the parsed file as a 2D array
+     */
     public List<List<SorValue>> getData() {
         if (this.data.size() == 0) {
             throw new SorParseException("No file has been parsed yet.");
@@ -218,10 +229,4 @@ public class SorParser {
         }
     }
 
-    // parse file by getting the line schema first, then parsing entire file based on schema
-    public void parseFile() {
-        int schemaLineIndex = this.findSchemaLine();
-        this.inferSchema(schemaLineIndex);
-        this.readData();
-    }
 }

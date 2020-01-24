@@ -7,10 +7,12 @@ public class SorValue {
     private Boolean boolValue;
     private Float floatValue;
 
+    // if no value is given to store, default to MISSING
     public SorValue() {
         this.type = SorType.MISSING;
     }
 
+    // constructors based on type of value to store
     public SorValue(Integer intValue) {
         this.type = SorType.INT;
         this.intValue = intValue;
@@ -31,24 +33,12 @@ public class SorValue {
         this.boolValue = boolValue;
     }
 
+    // return type of SorValue
     public SorType getType() {
         return type;
     }
 
-    public Integer getIntValue() {
-        return intValue;
-    }
-
-    public String getStringValue() {
-        return stringValue;
-    }
-
-    public Boolean getBoolValue() {
-        return boolValue;
-    }
-
-    public Float getFloatValue() { return floatValue; }
-
+    // return value of SorValue
     public Object getValue() {
         if (SorType.BOOL.equals(this.type)) {
             return this.boolValue;

@@ -3,8 +3,6 @@ package edu.swdev;
 import java.io.IOException;
 
 public class Main {
-
-    // TODO: Command line args
     public static void main(String[] args) {
         String fileName = null;
         int startPos = 0;
@@ -15,6 +13,7 @@ public class Main {
         int missingColIndex = -1;
         int missingColOffset = -1;
 
+        // store command line inputs accordingly based on flags present
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-f":
@@ -104,9 +103,12 @@ public class Main {
             }
         }
 
+        // create parser in preparation to parse schema and columnar representation of data
         SorParser parser = new SorParser(fileName, startPos, numBytes);
-
+        // hold data of parsed input file to be accessed via command line methods
         SorData data = new MemoryDataStore();
+
+        // attempt to parse input file, holding parsed data and schema accordingly
         try {
             parser.parseFile();
             data.setData(parser.getData());
@@ -116,6 +118,7 @@ public class Main {
             System.exit(1);
         }
 
+        // check if any method flag and argument was included in command line
         if (colTypeNumber != -1) {
             System.out.println(data.getColType(colTypeNumber));
             return;

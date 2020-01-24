@@ -12,11 +12,13 @@ public class MemoryDataStore implements SorData {
         this.schema = new ArrayList<>();
     }
 
+    // get parsed type of specific column
     @Override
     public SorType getColType(int column) {
         return this.schema.get(column);
     }
 
+    // get parsed value at specific position in file
     @Override
     public SorValue getValue(int column, int offset) {
         if (column >= this.data.size()) {

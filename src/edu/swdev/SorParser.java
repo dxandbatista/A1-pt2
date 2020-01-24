@@ -13,6 +13,7 @@ public class SorParser {
     private int startPos;
     private int numBytes;
 
+    // constructor; initialize fields
     public SorParser(String fileName, int startPos, int numBytes) {
         this.startPos = startPos;
         this.numBytes = numBytes;
@@ -27,6 +28,7 @@ public class SorParser {
         }
     }
 
+    // retrieve parsed schema
     public List<SorType> getSchema() {
         if (this.schema.size() == 0) {
             throw new SorParseException("No file has been parsed yet.");
@@ -34,6 +36,7 @@ public class SorParser {
         return this.schema;
     }
 
+    // retrieve parsed data
     public List<List<SorValue>> getData() {
         if (this.data.size() == 0) {
             throw new SorParseException("No file has been parsed yet.");
@@ -41,6 +44,7 @@ public class SorParser {
         return this.data;
     }
 
+    // find index of line that contains the most elements (to represent file schema)
     private int findSchemaLine() {
         int maxIndex = 0;
         int maxCount = 0;
@@ -49,6 +53,7 @@ public class SorParser {
             if ((currentRow = this.readNextLine()) != null && currentRow.length > 0) {
                 boolean completePair = true;
                 int currentElementCount = 0;
+                // count # of elements in current row based on pair of brackets
                 for (char c : currentRow) {
                     if (c == '<') {
                         completePair = false;
@@ -66,6 +71,8 @@ public class SorParser {
         return maxIndex;
     }
 
+    // store all the chars at a certain open bracket's position of a file line, up to a closed bracket
+    // returns index of corresponding closed bracket
     private int getNextField(char[] schemaLine, int index) {
         for (int i = index; i < schemaLine.length; i++) {
             if (schemaLine[i] == '>') {
@@ -76,10 +83,12 @@ public class SorParser {
         throw new IllegalStateException("The schema could not be determined as the SoR file is invalid.");
     }
 
+    // check to see if a String has quotes at its beginning and end
     private static boolean isQuotedString(String s) {
         return s.length() > 1 && s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"';
     }
 
+    // resets the file reader to its starting position
     private void resetFile() {
         try {
             this.file.seek(this.startPos);
@@ -88,6 +97,7 @@ public class SorParser {
         }
     }
 
+    // reads and stores the file's next line (if it exists)
     private char[] readNextLine() {
         char[] res;
         String lineString;
@@ -106,6 +116,8 @@ public class SorParser {
         }
     }
 
+    // creates a SorValue based on the type of input data; to be stored in the file's parsed data output
+    // order of data checks: BOOL, INT, FLOAT, STRING
     private SorValue parseField(String rawField) {
         String field = rawField.trim();
         if (field.length() == 0) {
@@ -119,7 +131,7 @@ public class SorParser {
             }
         }
         boolean isQuotedString = isQuotedString(field);
-        try {
+        try
             Integer integer = Integer.parseInt(field);
             return new SorValue(integer);
         } catch (NumberFormatException e) {
@@ -140,6 +152,7 @@ public class SorParser {
         }
     }
 
+    // get file schema based on line with most elements
     private void inferSchema(int schemaLineIndex) {
         this.resetFile();
         for (int i = 0; i < schemaLineIndex; i++) {
@@ -149,6 +162,7 @@ public class SorParser {
         int schemaStringPosition = 0;
         while (schemaStringPosition < schemaLineChars.length) {
             if (schemaLineChars[schemaStringPosition] == '<') {
+                // sets next scanning position of schema line to be at an element's close bracket
                 schemaStringPosition = this.getNextField(schemaLineChars, schemaStringPosition + 1);
                 String nextField = this.stringBuilder.toString();
                 schema.add(this.parseField(nextField).getType());
@@ -159,11 +173,14 @@ public class SorParser {
         }
     }
 
+    // parses a file line based on the file schema
+    // if their SoR types match, element is added to its respective data column (else MISSING is added)
     private void parseLine(char[] lineCharArray) {
         int linePosition = 0;
         int fieldCounter = 0;
         while (linePosition < lineCharArray.length) {
             if (lineCharArray[linePosition] == '<') {
+                // sets next scanning position of schema line to be at an element's close bracket
                 linePosition = this.getNextField(lineCharArray, linePosition + 1);
                 String nextField = this.stringBuilder.toString();
                 SorValue field = this.parseField(nextField);
@@ -179,11 +196,13 @@ public class SorParser {
             }
             linePosition++;
         }
+        // if a file line doesn't have enough elements to match the schema length, MISSINGs are added
         for (int i = fieldCounter; i < this.schema.size(); i++) {
             this.data.get(i).add(new SorValue());
         }
     }
 
+    // read next line of file data if it doesn't exceed maximum number of bytes to read
     private void readData() {
         this.resetFile();
         char[] nextLine;
@@ -199,6 +218,7 @@ public class SorParser {
         }
     }
 
+    // parse file by getting the line schema first, then parsing entire file based on schema
     public void parseFile() {
         int schemaLineIndex = this.findSchemaLine();
         this.inferSchema(schemaLineIndex);

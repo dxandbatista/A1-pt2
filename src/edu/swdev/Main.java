@@ -104,6 +104,10 @@ public class Main {
         }
 
         // create parser in preparation to parse schema and columnar representation of data
+        if (fileName == null) {
+            System.out.println("A file must be specified. Try again.");
+            System.exit(1);
+        }
         SorParser parser = new SorParser(fileName, startPos, numBytes);
         // hold data of parsed input file to be accessed via command line methods
         SorData data = new MemoryDataStore();
@@ -128,7 +132,12 @@ public class Main {
                 System.out.println("Both print_col_idx and print_col_offset must be set.");
                 System.exit(1);
             }
-            System.out.println(data.getValue(printColIndex, printColOffset).getValue());
+            SorValue valueToPrint = data.getValue(printColIndex, printColOffset);
+            if (SorType.STRING.equals(valueToPrint.getType())) {
+                System.out.println("\"" + valueToPrint.getValue() + "\"");
+            } else {
+                System.out.println(valueToPrint.getValue());
+            }
         }
         if (missingColIndex != -1 || missingColOffset != -1) {
             if (missingColIndex == -1 || missingColOffset == -1) {

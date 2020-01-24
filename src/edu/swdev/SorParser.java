@@ -131,7 +131,7 @@ public class SorParser {
             }
         }
         boolean isQuotedString = isQuotedString(field);
-        try
+        try {
             Integer integer = Integer.parseInt(field);
             return new SorValue(integer);
         } catch (NumberFormatException e) {
@@ -147,7 +147,7 @@ public class SorParser {
                 if (isQuotedString) {
                     return new SorValue(field.substring(1, field.length() - 1));
                 }
-                return new SorValue("\"" + field + "\"");
+                return new SorValue(field);
             }
         }
     }

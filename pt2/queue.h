@@ -3,7 +3,7 @@
 class Queue : public Object
 {
 public:
-    Object *data_; // The Object data held in this queue
+    Object *data_[]; // The Object data held in this queue
 
     // Constructor
     Queue()

@@ -80,7 +80,7 @@ public class SorParser {
             }
             this.stringBuilder.append(schemaLine[i]);
         }
-        throw new IllegalStateException("The schema could not be determined as the SoR file is invalid.");
+        throw new SorParseException("The schema could not be determined as the SoR file is invalid.");
     }
 
     // check to see if a String has quotes at its beginning and end

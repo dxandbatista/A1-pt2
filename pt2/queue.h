@@ -1,3 +1,5 @@
+//lang::CwC
+
 #include "object.h"
 
 class Queue : public Object

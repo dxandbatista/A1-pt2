@@ -1,2 +1,0 @@
-#!/bin/bash
-java -jar ./target/adapter-1.0.jar "$@"

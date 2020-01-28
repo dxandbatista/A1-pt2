@@ -5,8 +5,6 @@
 class Queue : public Object
 {
 public:
-    Object *data_[];         // The Object data held in this queue
-    long unsigned int size_; // How many items are in this queue currently
 
     // Constructor
     Queue()

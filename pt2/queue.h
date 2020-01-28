@@ -50,7 +50,7 @@ public:
     }
 
     // Returns size of queue
-    bool queue_size()
+    size_t queue_size()
     {
     }
 

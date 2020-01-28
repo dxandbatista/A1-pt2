@@ -88,7 +88,7 @@ void test4()
     q1->enqueue(s);
     q2->enqueue(t);
     t_true(q1->hash_me() > 0);
-    t_true(q1->hash_me == q1->hash_me);
+    t_true(q1->hash_me() == q1->hash_me());
     t_false(q2->hash_me() <= 0);
     OK("1");
 }

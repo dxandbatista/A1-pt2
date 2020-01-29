@@ -2,10 +2,10 @@
 
 #pragma once
 
+#include <stdio.h>
 #include "object.h" // our implementation of Object for A1
 #include "queue.h"  // our implementation of Queue for A1
 #include "string.h" // our implementation of String from Warmup
-#include <stdio.h>
 
 void FAIL()
 {

@@ -2,32 +2,40 @@
 
 class Object
 {
-	public:
-		long unsigned int hashVal;
+public:
+	/*
+         * Constructor.
+         */
+	Object(){};
 
-		// Constructor
-		Object()
-		{
-		}
+	/*
+         * Deconstructor.
+         */
+	virtual ~Object(){};
 
-		// Deconstructor
-		virtual ~Object()
-		{
-		}
+	/*
+         * Is this Object equal to the given one?
+         *
+         * @param other The object to check against this.
+         *
+         * @return true if other equates this, false if not.
+         */
+	virtual bool equals(Object *other){};
 
-		// Checks for equality between two Objects, if two objects are equal their hash codes
-		// should be equal as well
-		virtual bool equals(Object *o)
-		{
-		}
+	/*
+         * Generates a hash code unique to this object.
+         * 
+         * @return a numberical representation of this object.
+         */
+	virtual size_t hash(){};
 
-		// Generates a hash value for this Object if it doesn't already have one
-		virtual long unsigned int hash()
-		{
-		}
+	/*
+         * Return a newly allocated string describing the object 
+         */
+	virtual char *to_string(){};
 
-		// Generates a hash value for this Object
-		virtual long unsigned int hash_me()
-		{
-		}
+	/*
+         * Prints a string representation of this object to the console.
+         */
+	virtual void print(){};
 };

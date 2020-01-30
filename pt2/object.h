@@ -1,41 +1,27 @@
 //lang::CwC
+#pragma once
 
+#include <cstdlib>
+
+/**
+ * A class that represents the top of the object hierarchy.
+ * author: chasebish */
 class Object
 {
 public:
-	/*
-         * Constructor.
-         */
-	Object(){};
+    /** CONSTRUCTORS & DESTRUCTORS **/
 
-	/*
-         * Deconstructor.
-         */
-	virtual ~Object(){};
+    /* Default Object constructor */
+    Object();
 
-	/*
-         * Is this Object equal to the given one?
-         *
-         * @param other The object to check against this.
-         *
-         * @return true if other equates this, false if not.
-         */
-	virtual bool equals(Object *other){};
+    /* Default Object destructor, to be overriden by subclasses */
+    virtual ~Object();
 
-	/*
-         * Generates a hash code unique to this object.
-         * 
-         * @return a numberical representation of this object.
-         */
-	virtual size_t hash(){};
+    /** VIRTUAL METHODS **/
 
-	/*
-         * Return a newly allocated string describing the object 
-         */
-	virtual char *to_string(){};
+    /* Returns whether two objects are equal, to be overriden by subclasses */
+    virtual bool equals(Object *const obj);
 
-	/*
-         * Prints a string representation of this object to the console.
-         */
-	virtual void print(){};
+    /* Returns an object's hash value. Identical objects should have identical hashes */
+    virtual size_t hash();
 };

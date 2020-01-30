@@ -1,74 +1,48 @@
 //lang::CwC
-
 #pragma once
-#include "object.h"
 
+#include "object.h"
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+
+/**
+ * An immutable String class representing a char*
+ * author: chasebish */
 class String : public Object
 {
 public:
-	/*
-		 * Constructor
-		 *
-		 * @param str the pointer to the characters in this String
-		 */
-	String(const char *str){};
+	/** CONSTRUCTORS & DESTRUCTORS **/
 
-	/*
-		 * Deconstructor
-		 */
-	~String(){};
+	/* Creates a String copying s */
+	String(const char *s);
 
-	/*
-		 * The length of this String
-		 *
-		 * @return the length
-		 */
-	size_t size(){};
+	/* Copies a String copying the value from s */
+	String(String *const s);
 
-	/*
-		 * Is this String equal to the given Object?
-		 *
-		 * @param o the Object to be compared
-		 *
-		 * @return true if the two are equal, false if they are not
-		 */
-	bool equals(Object *other){};
+	/* Clears String from memory */
+	~String();
 
-	/*
-		 * Compares this String to the given one
-		 *
-		 * @param other The String to be compared with this one
-		 *
-		 * @return 	< 0 if this String has a smaller lexicographic value, 0 if they have an equal value, and > 0 if this
-		 * 			String has a larger value
-		 */
-	int compare(String *other){};
+	/** INHERITED METHODS **/
 
-	/*
-		 * Returns a hash value unique to this String
-		 *
-		 * @return the hash
-		 */
-	size_t hash(){};
+	/* Inherited from Object, generates a hash for a String */
+	size_t hash();
 
-	/*
-		 * Concatenates this String with the given one, and returns the result as a new String.
-		 *
-		 * @param other The String to be appended to the end of this one
-		 *
-		 * @return A new String with the result of concatenating the two Strings
-		 */
-	String *concat(String *other){};
+	/* Inherited from Object, checks equality between an String and an Object */
+	bool equals(Object *const obj);
 
-	/*
-		 * Getter for this String object's char*
-		 *
-		 * @return this class's char* field
-		 */
-	char *to_string(){};
+	/** STRING METHODS **/
 
-	/*
-		 * Print this string on stdout.
-		 */
-	void print(){};
+	/** Compares strings based on alphabetical order
+   * < 0 -> this String is less than String s
+   * = 0 -> this String is equal to String s
+   * > 0 -> this String is greater than String s
+   */
+	int cmp(String *const s);
+
+	/* Creates a new String by combining two existing Strings */
+	String *concat(String *const s);
+
+	/* Returns the current length of the String */
+	size_t size();
 };

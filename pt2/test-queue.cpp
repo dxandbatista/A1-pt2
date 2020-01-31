@@ -3,27 +3,38 @@
 #pragma once
 
 #include <stdio.h>
+#include <iostream>
 #include "object.h" // our implementation of Object for A1
 #include "queue.h"  // our implementation of Queue for A1
 #include "string.h" // our implementation of String from Warmup
 
 void FAIL()
 {
-    printf("Failed.");
+    std::cout << "Failed" << std::endl;
+    //printf("Failed.");
 }
+
 void OK(const char *m)
 {
-    printf("Passed!");
+    std::cout << "Passed" << std::endl;
+    //printf("Passed!" + "\n");
 }
+
 void t_true(bool p)
 {
-    if (!p)
+    if (!p) {
         FAIL();
+    } else {
+        OK("1");
+    }
 }
 void t_false(bool p)
 {
-    if (p)
+    if (p) {
         FAIL();
+    } else {
+        OK("1");
+    }
 }
 
 // test enqueue
@@ -37,7 +48,7 @@ void test1()
     q1->enqueue(s);
     q1->enqueue(t);
     t_true(q1->queue_size() == 2);
-    OK("1");
+    //OK("1");
 }
 
 //test dequeue
@@ -54,7 +65,7 @@ void test2()
     t_true(q1->dequeue()->equals(s));
     t_true(q1->dequeue()->equals(t));
     t_false(q1->dequeue()->equals(s));
-    OK("1");
+    //OK("1");
 }
 
 //test equals
@@ -74,7 +85,7 @@ void test3()
     t_true(q1->equals(q2));
     q1->enqueue(u);
     t_false(q1->equals(q2));
-    OK("1");
+    //OK("1");
 }
 
 //test hash_me
@@ -90,7 +101,7 @@ void test4()
     t_true(q1->hash_me() > 0);
     t_true(q1->hash_me() == q1->hash_me());
     t_false(q2->hash_me() <= 0);
-    OK("1");
+    //OK("1");
 }
 
 //test peek
@@ -105,7 +116,7 @@ void test5()
     t_true(q1->peek()->equals(s));
     q1->dequeue();
     t_true(q1->peek()->equals(t));
-    OK("1");
+    //OK("1");
 }
 
 //test contains
@@ -120,7 +131,7 @@ void test6()
     t_false(q1->contains(t));
     q1->enqueue(t);
     t_true(q1->contains(t));
-    OK("1");
+    //OK("1");
 }
 
 //test enqueue_all
@@ -144,7 +155,7 @@ void test7()
     q1->enqueue_all(q2);
     t_true(q1->queue_size() == 4);
     t_true(q1->contains(v));
-    OK("1");
+    //OK("1");
 }
 
 //test dequeue_all
@@ -160,7 +171,7 @@ void test8()
     t_true(q1->queue_size() == 2);
     q1->dequeue_all();
     t_true(q1->queue_size() == 0);
-    OK("1");
+    //OK("1");
 }
 
 int main()

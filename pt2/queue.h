@@ -5,7 +5,6 @@
 class Queue : public Object
 {
 public:
-
     // Constructor
     Queue()
     {
@@ -49,11 +48,6 @@ public:
 
     // Returns size of queue
     size_t queue_size()
-    {
-    }
-
-    // Prints contents of the Queue
-    void print_queue()
     {
     }
 

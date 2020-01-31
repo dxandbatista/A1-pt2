@@ -36,13 +36,13 @@ void test1()
     Queue *q2 = new Queue();
 
     t_true(q1->queue_size() == 0);
-    t_true(q2->queue_size() == 0);
     q1->enqueue(s);
     q1->enqueue(t);
-    q2->enqueue(o1);
     t_true(q1->queue_size() == 2);
+
+    t_true(q2->queue_size() == 0);
+    q2->enqueue(o1);
     t_true(q2->queue_size() == 1);
-    OK("1");
 }
 
 //test dequeue
@@ -61,9 +61,9 @@ void test2()
     t_true(q1->dequeue()->equals(s));
     t_true(q1->dequeue()->equals(t));
     t_false(q1->dequeue()->equals(s));
+
     q2->enqueue(o1);
     t_true(q2->dequeue()->equals(o1));
-    OK("1");
 }
 
 //test equals
@@ -91,7 +91,6 @@ void test3()
     q3->enqueue(o1);
     q4->enqueue(o1);
     t_true(q3->equals(q4));
-    OK("1");
 }
 
 //test hash_me
@@ -116,7 +115,6 @@ void test4()
     t_true(q3->hash_me() > 0);
     t_true(q3->hash_me() == q4->hash_me());
     t_false(q4->hash_me() < 0);
-    OK("1");
 }
 
 //test peek
@@ -140,7 +138,6 @@ void test5()
     t_true(q2->peek()->equals(o1));
     q2->dequeue();
     t_true(q2->peek()->equals(o2));
-    OK("1");
 }
 
 //test contains
@@ -161,7 +158,6 @@ void test6()
     t_false(q2->contains(o1));
     q2->enqueue(o1);
     t_true(q2->contains(o1));
-    OK("1");
 }
 
 //test enqueue_all
@@ -201,7 +197,6 @@ void test7()
     q3->enqueue_all(q4);
     t_true(q3->queue_size() == 3);
     t_true(q3->contains(o3));
-    OK("1");
 }
 
 //test dequeue_all
@@ -227,7 +222,6 @@ void test8()
     t_true(q2->queue_size() == 2);
     q2->dequeue_all();
     t_true(q2->queue_size() == 0);
-    OK("1");
 }
 
 int main()
@@ -240,5 +234,5 @@ int main()
     test6();
     test7();
     test8();
-    return 0;
+    OK("1");
 }

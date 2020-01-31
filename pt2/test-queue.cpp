@@ -31,12 +31,17 @@ void test1()
 {
     String *s = new String("Hello");
     String *t = new String("World");
+    Object *o1 = new Object();
     Queue *q1 = new Queue();
+    Queue *q2 = new Queue();
 
     t_true(q1->queue_size() == 0);
+    t_true(q2->queue_size() == 0);
     q1->enqueue(s);
     q1->enqueue(t);
+    q2->enqueue(o1);
     t_true(q1->queue_size() == 2);
+    t_true(q2->queue_size() == 1);
     OK("1");
 }
 
@@ -46,7 +51,9 @@ void test2()
     String *s = new String("Hello");
     String *t = new String("World");
     String *u = s->concat(t);
+    Object *o1 = new Object();
     Queue *q1 = new Queue();
+    Queue *q2 = new Queue();
 
     q1->enqueue(s);
     q1->enqueue(t);
@@ -54,6 +61,8 @@ void test2()
     t_true(q1->dequeue()->equals(s));
     t_true(q1->dequeue()->equals(t));
     t_false(q1->dequeue()->equals(s));
+    q2->enqueue(o1);
+    t_true(q2->dequeue()->equals(o1));
     OK("1");
 }
 
@@ -63,8 +72,11 @@ void test3()
     String *s = new String("Hello");
     String *t = new String("World");
     String *u = s->concat(t);
+    Object *o1 = new Object();
     Queue *q1 = new Queue();
     Queue *q2 = new Queue();
+    Queue *q3 = new Queue();
+    Queue *q4 = new Queue();
 
     t_true(q1->equals(q2));
     q1->enqueue(s);
@@ -74,6 +86,11 @@ void test3()
     t_true(q1->equals(q2));
     q1->enqueue(u);
     t_false(q1->equals(q2));
+
+    t_true(q3->equals(q4));
+    q3->enqueue(o1);
+    q4->enqueue(o1);
+    t_true(q3->equals(q4));
     OK("1");
 }
 
@@ -82,14 +99,23 @@ void test4()
 {
     String *s = new String("Hello");
     String *t = new String("World");
+    Object *o1 = new Object();
     Queue *q1 = new Queue();
     Queue *q2 = new Queue();
+    Queue *q3 = new Queue();
+    Queue *q4 = new Queue();
 
     q1->enqueue(s);
     q2->enqueue(t);
     t_true(q1->hash_me() > 0);
     t_true(q1->hash_me() == q1->hash_me());
-    t_false(q2->hash_me() <= 0);
+    t_false(q2->hash_me() < 0);
+
+    q3->enqueue(o1);
+    q4->enqueue(o1);
+    t_true(q3->hash_me() > 0);
+    t_true(q3->hash_me() == q4->hash_me());
+    t_false(q4->hash_me() < 0);
     OK("1");
 }
 
@@ -98,13 +124,22 @@ void test5()
 {
     String *s = new String("Hello");
     String *t = new String("World");
+    Object *o1 = new Object();
+    Object *o2 = new Object();
     Queue *q1 = new Queue();
+    Queue *q2 = new Queue();
 
     q1->enqueue(s);
     q1->enqueue(t);
     t_true(q1->peek()->equals(s));
     q1->dequeue();
     t_true(q1->peek()->equals(t));
+
+    q2->enqueue(o1);
+    q2->enqueue(o2);
+    t_true(q2->peek()->equals(o1));
+    q2->dequeue();
+    t_true(q2->peek()->equals(o2));
     OK("1");
 }
 
@@ -113,13 +148,19 @@ void test6()
 {
     String *s = new String("Hello");
     String *t = new String("World");
+    Object *o1 = new Object();
     Queue *q1 = new Queue();
+    Queue *q2 = new Queue();
 
     q1->enqueue(s);
     t_true(q1->contains(s));
     t_false(q1->contains(t));
     q1->enqueue(t);
     t_true(q1->contains(t));
+
+    t_false(q2->contains(o1));
+    q2->enqueue(o1);
+    t_true(q2->contains(o1));
     OK("1");
 }
 
@@ -130,8 +171,13 @@ void test7()
     String *t = new String("World");
     String *u = s->concat(t);
     String *v = new String("Yay Me");
+    Object *o1 = new Object();
+    Object *o2 = new Object();
+    Object *o3 = new Object();
     Queue *q1 = new Queue();
     Queue *q2 = new Queue();
+    Queue *q3 = new Queue();
+    Queue *q4 = new Queue();
 
     t_true(q1->queue_size() == 0);
     t_true(q2->queue_size() == 0);
@@ -144,6 +190,17 @@ void test7()
     q1->enqueue_all(q2);
     t_true(q1->queue_size() == 4);
     t_true(q1->contains(v));
+
+    t_true(q3->queue_size() == 0);
+    t_true(q4->queue_size() == 0);
+    q3->enqueue(o1);
+    q4->enqueue(o2);
+    q4->enqueue(o3);
+    t_true(q3->queue_size == 1);
+    t_true(q4->queue_size == 2);
+    q3->enqueue_all(q4);
+    t_true(q3->queue_size() == 3);
+    t_true(q3->contains(o3));
     OK("1");
 }
 
@@ -152,7 +209,10 @@ void test8()
 {
     String *s = new String("Hello");
     String *t = new String("World");
+    Object *o1 = new Object();
+    Object *o2 = new Object();
     Queue *q1 = new Queue();
+    Queue *q2 = new Queue();
 
     t_true(q1->queue_size() == 0);
     q1->enqueue(s);
@@ -160,6 +220,13 @@ void test8()
     t_true(q1->queue_size() == 2);
     q1->dequeue_all();
     t_true(q1->queue_size() == 0);
+
+    t_true(q2->queue_size() == 0);
+    q2->enqueue(o1);
+    q2->enqueue(o2);
+    t_true(q2->queue_size() == 2);
+    q2->dequeue_all();
+    t_true(q2->queue_size() == 0);
     OK("1");
 }
 

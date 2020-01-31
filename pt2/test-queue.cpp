@@ -192,8 +192,8 @@ void test7()
     q3->enqueue(o1);
     q4->enqueue(o2);
     q4->enqueue(o3);
-    t_true(q3->queue_size == 1);
-    t_true(q4->queue_size == 2);
+    t_true(q3->queue_size() == 1);
+    t_true(q4->queue_size() == 2);
     q3->enqueue_all(q4);
     t_true(q3->queue_size() == 3);
     t_true(q3->contains(o3));
